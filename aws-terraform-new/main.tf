@@ -14,7 +14,7 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket  = "terraformbuckerforstatefiles" # create s3 bucket to store statefile
+    bucket  = "ecs-terraform-bucker000125457222363" # create s3 bucket to store statefile
     key     = "dev/terraform.tfstate"
     region  = "us-east-1"
     encrypt = false
@@ -44,8 +44,8 @@ module "security_group" {
 
 module "ec2" {
   source             = "./ec2"
-  ami_id             = "ami-04b4f1a9cf54c11d0" # Ubuntu 22.04 (us-east-1)
-  instance_type      = "t2.micro"
+  ami_id             = "ami-0ecb62995f68bb549" # Ubuntu 22.04 (us-east-1)
+  instance_type      = "t3.micro"
   subnet_id          = element(module.vpc.public_subnet_ids, 0)
   security_group_ids = [module.security_group.sg_ec2_sg_ssh_http_id]
   key_name           = "project-keypair2025"  # create keypair manually & update name here
@@ -65,18 +65,19 @@ module "rds" {
   source                  = "./rds"
   db_identifier           = "my-rds-instance"
   db_name                 = "appdb"
-  db_username             = "vijay"
+  db_username             = "srinivas"
   db_password             = "Password123" 
   db_subnet_ids           = module.vpc.public_subnet_ids
   db_subnet_group_name    = "rds-subnet-group"
   security_group_id       = module.security_group.rds_mysql_sg_id
-  allocated_storage       = 20
+  allocated_storage       = 30
   storage_type            = "gp2"
   engine                  = "MySQL"
   engine_version          = "8.0.41"
   instance_class          = "db.t3.micro"
   backup_retention_period = 0
 }
+
 
 
 
