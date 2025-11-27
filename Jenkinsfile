@@ -136,14 +136,14 @@ pipeline {
             steps {
                 git branch: 'main',
                     credentialsId: 'github-cred',
-                    url: 'https://github.com/vijaygiduthuri/aws-2-tier-helm-chart.git'
+                    url: 'https://github.com/srinivasthalla/aws-2-tier-helm-chart.git'
             }
         }
 
         stage('Update helm values.yaml with New Docker Image') {
             environment {
                 GIT_REPO_NAME = "aws-2-tier-helm-chart"
-                GIT_USER_NAME = "vijaygiduthuri"
+                GIT_USER_NAME = "srinivasthalla"
             }
             steps {
                 withCredentials([usernamePassword(
@@ -154,7 +154,7 @@ pipeline {
                     sh """
                         set -e
 
-                        git config user.email "vijaygiduthuri@example.com"
+                        git config user.email "srinivasthalla@example.com"
                         git config user.name "${GIT_USER_NAME}"
 
                         echo "=== BEFORE ==="
